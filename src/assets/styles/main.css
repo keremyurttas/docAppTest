@@ -467,9 +467,8 @@
   .footer-mobile {
     background-color: transparent;
     display: flex;
-    gap: 1rem;
+justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0;
   }
   .social-icon-container {
     width: 15px;
@@ -484,6 +483,7 @@
   .footer-mobile-center a {
     color: white;
     text-decoration: none;
+    font-size: 7px;
   }
   .circle-logo-mobile {
     border-radius: 50%;
