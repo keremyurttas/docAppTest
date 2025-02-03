@@ -1,0 +1,538 @@
+/* Blurred background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Dark semi-transparent overlay */
+  backdrop-filter: blur(10px); /* Apply blur */
+  z-index: 10;
+}
+.toolbar-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  color: #124094;
+  text-transform: none !important;
+}
+.toolbar-title h1 {
+  text-wrap: wrap;
+  text-align: center;
+  font-weight: 400;
+  text-transform: none !important;
+}
+
+.main-container {
+  background-image: url("/src/assets/background.svg");
+  background-size: cover; /* Ensures the image covers the full screen */
+  background-position: center; /* Centers the background */
+  background-repeat: no-repeat; /* Prevents repeating */
+  min-width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  padding: 12.5vh 10vw;
+  overflow-y: hidden;
+}
+.box-container {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  color: white;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6rem;
+  margin: auto auto;
+  position: relative;
+  padding-top: 25px;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.top-bar {
+  position: relative;
+  display: flex;
+  border-bottom: 0.2rem solid rgba(255, 255, 255, 0.2);
+  justify-content: space-between;
+  padding-bottom: 1.3rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  margin-bottom: 5.5rem;
+}
+.top-bar hr {
+  margin: auto 1rem;
+  background: #ffff;
+  border: none;
+  height: 60%; /* Make the hr element fill its container's height */
+  width: 0.2rem;
+  display: block; /* Ensures the <hr> behaves as a block element */
+}
+
+.box h2 {
+  font-size: 33px;
+  font-weight: 400;
+  line-height: normal;
+}
+.box h4 {
+  font-size: 21px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.socials-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.social-icon-container {
+  display: flex; /* Added flex to center the icon */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  width: 30px; /* Increased to account for padding */
+  height: 30px; /* Increased to account for padding */
+  background: #111114;
+  border-radius: 100%;
+  padding: 1px;
+  box-sizing: border-box; /* Makes sure padding is included in width/height */
+}
+.social-icon-container .social-icon {
+  width: 50%;
+  height: 50%;
+}
+.bg-item {
+  position: absolute;
+  opacity: 80%;
+}
+.bg-item1 {
+  bottom: 2%;
+  left: 28%;
+}
+.bg-item2 {
+  top: 0;
+  right: 0;
+  width: 273px !important;
+}
+
+.content-container {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  display: flex;
+  gap: 10rem;
+  position: relative;
+  height: 65%;
+}
+.search-container {
+  border-radius: 20px;
+  width: 520px;
+  height: 37px;
+}
+.custom-search-circle {
+  background-color: white;
+  border-radius: 100%;
+  width: 26px;
+  height: 26px;
+}
+
+.circle-logo {
+  max-width: 208px;
+  border-radius: 100%;
+  position: relative;
+  top: -70px;
+}
+.footer {
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  max-height: 135px;
+  font-size: 17px;
+}
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+.footer-text {
+  display: flex;
+  gap: 18rem;
+}
+
+.custom-select :deep(.v-field) {
+  border-radius: 10px;
+}
+
+/* Hide the default select icon */
+.custom-select :deep(.v-select__selection-icon) {
+  display: none;
+}
+
+/* Rotate icon when select is open */
+.custom-select :deep(.v-field--active .v-field__append-inner .v-icon) {
+  transform: rotate(180deg);
+}
+.custom-select :deep(.v-select__selection-text) {
+  font-size: 18px !important;
+}
+
+/* Optional: style the dropdown menu */
+.custom-select :deep(.v-select__content) {
+  border-radius: 10px;
+}
+.custom-radio-group {
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  max-height: 80%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 3rem;
+  padding: 2rem 1rem 0 1rem;
+  width: 65%;
+
+  position: relative;
+}
+
+/* Webkit browsers (Chrome, Safari) scrollbar styling */
+.custom-radio-group::-webkit-scrollbar {
+  width: 24px;
+}
+
+.custom-radio-group::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.4);
+  margin: 2rem;
+}
+
+.custom-radio-group::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.custom-radio-group::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.custom-radio:first-child {
+  border-bottom: 1px solid rgba(255, 254, 254, 0.3);
+}
+.download-buttons-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center; /* Centers items horizontally */
+  z-index: 20;
+  max-width: 80%;
+  align-items: stretch; /* Ensures both buttons stretch to the same height */
+}
+
+.zip-download-btn,
+.seperate-download-btn {
+  display: flex;
+
+  flex-grow: 1; /* Makes both buttons take up equal width */
+  height: 100%; /* Ensures they stretch to match */
+  box-sizing: border-box; /* Ensures padding doesn’t affect dimensions */
+  min-width: 150px; /* Prevents buttons from shrinking too much */
+}
+
+.zip-download-btn {
+  background-color: white;
+  color: black;
+  border-radius: 0;
+  padding: 0.5rem 1rem; /* Keeps intended padding */
+}
+
+.seperate-download-btn {
+  border: 1px solid white;
+  background: transparent;
+
+  border-radius: 0;
+  padding: 0.5rem 1rem; /* Keeps intended padding */
+  color: white;
+}
+.content-left-container {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: space-between;
+}
+.content-right-container {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: space-between;
+}
+.selects-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 90%;
+
+  overflow-y: auto;
+  gap: 0.5rem;
+}
+.download-popup {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Ensures content inside is centered */
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto; /* Optional: Centers the popup */
+  gap: 2rem;
+  min-width: 40vw;
+  max-width: 40vw;
+  width: 40vw;
+  z-index: 200;
+}
+
+.custom-radio-group {
+  max-height: 80%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 3rem;
+  padding: 2rem 1rem 0 1rem;
+  min-width: 100%;
+  position: relative;
+}
+
+.zip-download-btn,
+.seperate-download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Makes both buttons take up equal width */
+  height: 100%; /* Ensures they stretch to match */
+  box-sizing: border-box; /* Ensures padding doesn't affect dimensions */
+} /* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: rgba(249, 249, 249, 0.4);
+  border-radius: 4px;
+}
+
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.show-files-button {
+  background-color: white;
+  color: black;
+  border-radius: 0;
+  padding: 0.5rem 1rem; /* Keeps intended padding */
+  margin: 0 auto;
+  display: block;
+}
+
+@media only screen and (max-width: 1000px) {
+  * {
+    font-size: 12px;
+  }
+
+  .main-container {
+    margin-top: 0;
+    overflow-y: auto;
+    padding: 0;
+  }
+  .box-container {
+    margin: 0;
+    padding: 10% 5%;
+    backdrop-filter: blur(30px); /* Apply blur */
+  }
+  .content-container-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+  }
+  .box {
+    border-radius: 30px;
+    padding: 5% 7%;
+    max-height: 80%;
+    background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
+  }
+
+  .top-bar-mobile {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10%;
+    align-items: center;
+  }
+  .top-bar-mobile h4 {
+    color: white;
+    font-size: 17px;
+    width: max-content;
+    border-bottom: solid 0.5px white;
+    font-weight: 200;
+  }
+  .search-container {
+    width: 100%;
+  }
+  .search-container .custom-search .v-field__input {
+    min-height: 38px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .search-container .custom-search .v-field__append-inner {
+    padding-top: 0 !important;
+    height: 38px;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-container .custom-search .v-field__prepend-inner {
+    padding-top: 0 !important;
+    height: 38px;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-container .custom-search input {
+    margin-top: 0 !important;
+  }
+  .search-container .custom-search-circle {
+    width: 20px;
+    height: 20px;
+  }
+
+  .content-container-mobile .selects-container {
+    max-height: 30vh;
+    min-height: 30vh;
+    overflow-y: auto;
+  }
+  .download-mobile-container {
+    display: flex;
+    flex-direction: column;
+    height: 30vh; /* Ensure it has a fixed height */
+    min-height: 30vh;
+  }
+
+  .content-container-mobile .custom-radio-group {
+    max-width: 100%;
+
+    border-radius: 30px;
+    padding-top: 1rem;
+  }
+
+  .content-container-mobile .selects-container .custom-select {
+    max-height: min-content;
+  }
+  .content-container-mobile .selects-container .v-select:not(:first-child) {
+    width: 90%;
+  }
+  .content-container-mobile .custom-radio:not(:first-child) {
+    margin-bottom: 0.5rem;
+  }
+  .content-container-mobile .download-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: auto;
+  }
+
+  .content-container-mobile .zip-download-btn,
+  .content-container-mobile .seperate-download-btn {
+    padding: 0.2rem 0.1rem !important; /* Reduce padding */
+    font-size: 12px !important; /* Reduce font size */
+    max-width: 30vw !important; /* Reduce width */
+    min-width: 30vw !important; /* Prevent forced min-width */
+    height: 4vh !important; /* Reduce height */
+  }
+
+  .content-container-mobile .seperate-download-btn {
+    background-color: #164193;
+    color: white;
+    border: none;
+    flex-shrink: 1;
+  }
+
+  .footer-mobile {
+    background-color: transparent;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+  .social-icon-container {
+    width: 15px;
+    height: 15px;
+  }
+  .footer-mobile-center {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: center;
+  }
+  .footer-mobile-center a {
+    color: white;
+    text-decoration: none;
+  }
+  .circle-logo-mobile {
+    border-radius: 50%;
+  }
+  .footer-mobile-center span {
+    color: white;
+    font-size: 0.5rem;
+    min-width: max-content;
+  }
+  .footer-mobile-right {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+  }
+  .footer-mobile-right h5 {
+    font-weight: normal;
+    font-size: 0.5rem;
+    min-width: max-content;
+  }
+  .footer-mobile-right h6 {
+    font-weight: normal;
+    font-size: 0.4rem;
+    min-width: max-content;
+    border-left: 1px solid rgba(255, 255, 255, 0.3); /* Adjust opacity */
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0 0.5rem;
+  }
+}
+
+.search-results {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-results :deep(.v-list-item) {
+  cursor: pointer;
+}
+
+.search-results :deep(.v-list-item:hover) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.search-results :deep(.v-list-item-title) {
+  color: white;
+  font-size: 14px;
+  white-space: normal;
+  word-break: break-word;
+}

@@ -1,0 +1,13 @@
+/* src/assets/styles/main.css */
+.font-poppins {
+  font-family: "Poppins", serif;
+}
+@font-face {
+  font-family: "NexaBook";
+  src: url("@/assets/fonts/NexaBook.otf");
+  font-weight: normal;
+  font-style: normal;
+}
+.font-nexa {
+  font-family: "NexaBook", serif;
+}
