@@ -1,10 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index.ts";
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
 
 // Vuetify
 import "vuetify/styles";

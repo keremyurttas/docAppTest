@@ -1,10 +1,62 @@
 <template>
   <v-container class="main-container" :class="{ blurred: isBlurred }">
-    <div
-      v-if="isBlurred && $vuetify.display.mdAndUp"
-      class="overlay"
-      @click="isBlurred = false"
-    ></div>
+    <v-fade-transition v-if="$vuetify.display.mdAndUp">
+      <div
+        v-if="isBlurred && $vuetify.display.mdAndUp"
+        class="overlay"
+        @click="isBlurred = false"
+      >
+        <div v-if="isBlurred" class="download-popup">
+          <p style="color: red" v-if="displayError">
+            En az bir dosya seçmelisiniz.
+          </p>
+          <v-checkbox-group
+            v-if="files.length > 0"
+            class="custom-radio-group"
+            multiple
+            transition="false"
+          >
+            <v-checkbox
+              class="custom-radio"
+              label="Hepsini Seç"
+              :model-value="isAllSelected"
+              @change="toggleSelectAll"
+            ></v-checkbox>
+
+            <v-checkbox
+              class="custom-radio"
+              v-for="(item, index) in files"
+              :key="index"
+              :label="item.name"
+              v-model="selectedFiles"
+              :value="item.webContentLink"
+            ></v-checkbox>
+          </v-checkbox-group>
+          <div class="download-buttons-container">
+            <v-btn
+              @click="downloadFilesAsZip"
+              class="zip-download-btn text-none"
+              block
+            >
+              ZIP İndir
+              <v-img
+                width="24"
+                height="24"
+                :src="require('@/assets/zip-icon.svg')"
+              ></v-img>
+            </v-btn>
+            <v-btn
+              @click="downloadSelectedFiles"
+              class="seperate-download-btn text-none"
+              block
+            >
+              Seçilenleri İndir
+            </v-btn>
+          </div>
+        </div>
+      </div>
+    </v-fade-transition>
+
     <v-img
       v-if="$vuetify.display.mdAndUp"
       width="311"
@@ -54,185 +106,85 @@
         <div v-if="$vuetify.display.mdAndUp" class="content-container">
           <div class="content-left-container">
             <div class="selects-container">
-              <v-select
+              <v-autocomplete
                 v-model="selectedCategory"
                 @update:model-value="fetchNextLevel(selectedCategory, 0)"
                 label="KATEGORİ SEÇİNİZ"
                 bg-color="rgba(0, 0, 0, 0.4)"
-                width="352"
                 append-inner-icon="mdi-chevron-down"
-                class="custom-select"
+                class="custom-select font-poppins"
                 menu-icon=""
                 :items="categories"
                 item-value="id"
                 item-title="name"
                 hide-details="true"
-              ></v-select>
+                spellcheck="false"
+              ></v-autocomplete>
 
-              <v-select
+              <component
                 v-for="(step, index) in selectionSteps"
                 :key="index"
                 v-model="selectedValues[index]"
+                :is="index < 2 ? 'v-autocomplete' : 'v-select'"
                 @update:model-value="
                   fetchNextLevel(selectedValues[index], index + 1)
                 "
                 bg-color="rgba(0, 0, 0, 0.4)"
-                label="KATEGORİ SEÇİNİZ"
+                label="SEÇİNİZ"
                 append-inner-icon="mdi-chevron-down"
-                class="custom-select"
+                class="custom-select font-poppins"
                 menu-icon=""
                 :items="step.options"
                 item-value="id"
                 item-title="name"
                 hide-details="true"
-              ></v-select>
+                spellcheck="false"
+              ></component>
             </div>
             <v-btn
               @click="isBlurred = true"
-              class="show-files-button"
+              class="show-files-button text-none"
               v-if="!isBlurred && files.length > 0"
             >
               Dosyaları Getir
             </v-btn>
           </div>
-          <div class="content-right-container">
-            <div class="search-container">
-              <v-autocomplete
-                class="mx-auto custom-search"
-                density="comfortable"
-                menu-icon=""
-                placeholder="Örnek: Verona 14W"
-                variant="solo"
-                theme="dark"
-                auto-select-first
-                item-props
-                rounded
-                @input="searchFolders"
-              >
-                <template v-slot:prepend-inner>
-                  <div class="custom-search-circle"></div>
-                </template>
-                <template v-slot:append-inner>
-                  <v-img
-                    width="18"
-                    height="18"
-                    :src="require('@/assets/magnifier.svg')"
-                  ></v-img>
-                </template>
-              </v-autocomplete>
-            </div>
-            <v-fade-transition v-if="$vuetify.display.mdAndUp">
-              <div v-if="isBlurred" class="download-popup">
-                <p style="color: red" v-if="displayError">
-                  En az bir dosya seçmelisiniz.
-                </p>
-                <v-checkbox-group
-                  v-if="files.length > 0"
-                  class="custom-radio-group"
-                  multiple
-                  transition="false"
-                >
-                  <v-checkbox
-                    class="custom-radio"
-                    label="Hepsini Seç"
-                    :model-value="isAllSelected"
-                    @change="toggleSelectAll"
-                  ></v-checkbox>
-
-                  <v-checkbox
-                    class="custom-radio"
-                    v-for="(item, index) in files"
-                    :key="index"
-                    :label="item.name"
-                    v-model="selectedFiles"
-                    :value="item.webContentLink"
-                  ></v-checkbox>
-                </v-checkbox-group>
-                <div class="download-buttons-container">
-                  <v-btn
-                    @click="downloadFilesAsZip"
-                    class="zip-download-btn"
-                    block
-                  >
-                    ZIP İndir
-                    <v-img
-                      width="24"
-                      height="24"
-                      :src="require('@/assets/zip-icon.svg')"
-                    ></v-img>
-                  </v-btn>
-                  <v-btn
-                    @click="downloadSelectedFiles"
-                    class="seperate-download-btn"
-                    block
-                  >
-                    Seçilenleri İndir
-                  </v-btn>
-                </div>
-              </div>
-            </v-fade-transition>
-          </div>
         </div>
         <div v-else class="content-container-mobile">
-          <div class="search-container">
-            <v-autocomplete
-              :items="items"
-              class="mx-auto custom-search"
-              density="comfortable"
-              menu-icon=""
-              placeholder="Örnek: Verona 14W"
-              variant="solo"
-              theme="dark"
-              auto-select-first
-              item-props
-              rounded
-            >
-              <template v-slot:prepend-inner>
-                <div class="custom-search-circle"></div>
-              </template>
-              <template v-slot:append-inner>
-                <v-img
-                  width="12"
-                  height="12"
-                  :src="require('@/assets/magnifier.svg')"
-                ></v-img>
-              </template>
-            </v-autocomplete>
-          </div>
           <div class="selects-container">
-            <v-select
+            <v-autocomplete
               v-model="selectedCategory"
               @update:model-value="fetchNextLevel(selectedCategory, 0)"
               label="KATEGORİ SEÇİNİZ"
               bg-color="rgba(0, 0, 0, 0.4)"
               append-inner-icon="mdi-chevron-down"
-              class="custom-select"
+              class="custom-select font-poppins"
               menu-icon=""
               :items="categories"
               item-value="id"
               item-title="name"
               hide-details="true"
-              rounded="lg"
-            ></v-select>
+              spellcheck="false"
+            ></v-autocomplete>
 
-            <v-select
+            <component
               v-for="(step, index) in selectionSteps"
               :key="index"
               v-model="selectedValues[index]"
+              :is="index < 2 ? 'v-autocomplete' : 'v-select'"
               @update:model-value="
                 fetchNextLevel(selectedValues[index], index + 1)
               "
               bg-color="rgba(0, 0, 0, 0.4)"
-              label="KATEGORİ SEÇİNİZ"
+              label="SEÇİNİZ"
               append-inner-icon="mdi-chevron-down"
-              class="custom-select"
+              class="custom-select font-poppins"
               menu-icon=""
               :items="step.options"
               item-value="id"
               item-title="name"
               hide-details="true"
-              rounded="lg"
-            ></v-select>
+            ></component>
           </div>
 
           <div class="download-mobile-container">
@@ -326,7 +278,7 @@
   </v-container>
 </template>
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import JSZip, { file } from "jszip";
 import { saveAs } from "file-saver";
 import axios from "axios";

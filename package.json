@@ -12,10 +12,8 @@
     "@vueuse/head": "^2.0.0",
     "axios": "^1.7.9",
     "file-saver": "^2.0.5",
-    "firebase": "^10.12.4",
     "jszip": "^3.10.1",
     "pdfjs-dist": "^4.4.168",
-    "sweetalert2": "^11.12.3",
     "vue": "^3.2.13",
     "vue-router": "^4.4.0",
     "vuetify": "^3.6.13"
