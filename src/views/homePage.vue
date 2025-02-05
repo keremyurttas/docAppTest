@@ -1,10 +1,11 @@
 <template>
   <v-container class="main-container" :class="{ blurred: isBlurred }">
+    <progress-loader v-if="isLoading"></progress-loader>
     <v-fade-transition v-if="$vuetify.display.mdAndUp">
       <div
         v-if="isBlurred && $vuetify.display.mdAndUp"
         class="overlay"
-        @click="isBlurred = false"
+        @click.self="isBlurred = false"
       >
         <div v-if="isBlurred" class="download-popup">
           <p style="color: red" v-if="displayError">
@@ -278,12 +279,12 @@
   </v-container>
 </template>
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
-import JSZip, { file } from "jszip";
+import { ref, onMounted, computed } from "vue";
+import ProgressLoader from "@/components/ProgressLoader.vue";
+import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import axios from "axios";
 import SocialIcons from "@/components/SocialIcons.vue";
-import { loadGapi } from "@/services/googleApi";
 const categories = ref([]);
 const selectionSteps = ref([]);
 const selectedCategory = ref("");
@@ -292,15 +293,10 @@ const files = ref([]);
 const selectedFiles = ref([]);
 const selectAll = ref(false);
 const apiKey = "AIzaSyDNn-oguslOMXTW1TjLoQfdKvcmlZbhiCg";
-const rootFolderId = "1xfdXsdwpuYlHjMjw2B4wlAnpOgv4UYWY";
+const rootFolderId = "1VJuskPhsTCp3dw8ACANrwLVqYpizbcqK";
 const isBlurred = ref(false);
 const displayError = ref(false);
-// Add these reactive references
-const searchQuery = ref("");
-const isSearching = ref(false);
-const searchTimeout = ref(null);
-const searchResults = ref([]);
-const allItems = ref([]);
+const isLoading = ref(false);
 
 const fetchFolders = async (parentId) => {
   try {
@@ -351,6 +347,12 @@ const fetchFiles = async (parentId) => {
     files.value = [];
   }
 };
+const formattedDate = (date) =>
+  date.toLocaleDateString("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  });
 
 const fetchCategories = async () => {
   categories.value = await fetchFolders(rootFolderId);
@@ -389,6 +391,7 @@ function toggleSelectAll() {
   }
 }
 const downloadFilesAsZip = async () => {
+  isLoading.value = true;
   if (!Array.isArray(selectedFiles.value) || selectedFiles.value.length === 0) {
     displayError.value = true;
     console.error("No files selected");
@@ -417,10 +420,16 @@ const downloadFilesAsZip = async () => {
 
   // Generate ZIP and trigger download
   zip.generateAsync({ type: "blob" }).then((zipBlob) => {
-    saveAs(zipBlob, "downloaded_files.zip");
+    const now = new Date();
+
+    const result = `DoganLED_${formattedDate(now)}`;
+
+    saveAs(zipBlob, `${result}.zip`);
   });
   displayError.value = false;
   isBlurred.value = false;
+  isLoading.value = false;
+  selectedFiles.value = [];
 };
 
 const downloadSelectedFiles = async () => {
@@ -429,7 +438,7 @@ const downloadSelectedFiles = async () => {
     displayError.value = true;
     return;
   }
-
+  isLoading.value = true;
   for (const fileUrl of selectedFiles.value) {
     try {
       const fileObj = files.value.find((f) => f.webContentLink === fileUrl);
@@ -453,6 +462,8 @@ const downloadSelectedFiles = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       displayError.value = false;
       isBlurred.value = false;
+      isLoading.value = false;
+      selectedFiles.value = [];
     } catch (error) {
       console.error(`Error downloading file ${fileUrl}:`, error);
     }
